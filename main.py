@@ -3,6 +3,18 @@
 Writes the entry monologue to /output/entry.txt (or $OUTPUT_DIR/entry.txt).
 The monologue lives in monologue.txt next to this file; this program copies it
 verbatim and verifies the gate (UTF-8, 1-600 chars, exactly 100 words).
+
+Word counting: ``text.split()`` — Python's default split on runs of whitespace.
+That means a standalone em-dash token ("—") counts as one word here, because
+split() treats it as a token bounded by spaces, not as punctuation to strip.
+The same text scores 99 under GNU ``wc -w``, which drops a lone punctuation
+token; the kit's gate uses the Python split, so 100 is the number that matters
+and the verifier reports it explicitly.
+
+Why both counts are printed: the competition gates on two independent
+dimensions — exactly 100 words AND 1-600 chars — so the run prints both
+("100 words, 580 chars") as a single human-readable receipt that the entry
+clears both at once, instead of failing silently on one of them.
 """
 
 import os
